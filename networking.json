@@ -1,0 +1,258 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "CloudFormation",
+  "Parameters": {
+    "AwsRegion": {
+      "Description" : "AWS Region",
+      "Type" : "String",
+      "Default": "us-east-1"
+    },
+    "VPCName": {
+      "Description" : "Name of VPC",
+      "Type": "String",
+      "Default" : "WebappCloudFormation"
+    },
+    "VPCSubnetCidrBlock":{
+      "Description":"10.0.0.0/16 ---- total 65334 ips",
+      "Type":"String",
+      "Default":"10.0.0.0/16",
+      "MinLength":"10",
+      "MaxLength":"18"
+    },
+    "PublicSubnetCidrBlock1":{
+      "Type":"String",
+      "Default":"10.0.1.0/24",
+      "MinLength":"10",
+      "MaxLength":"18"
+    },
+    "PublicSubnetCidrBlock2":{
+      "Type":"String",
+
+      "Default":"10.0.2.0/24",
+      "MinLength":"10",
+      "MaxLength":"18"
+    },
+    "PublicSubnetCidrBlock3":{
+      "Type":"String",
+      "Default":"10.0.3.0/24",
+      "MinLength":"10",
+      "MaxLength":"18"
+    },
+    "AvailabilityZone1":{
+      "Type":"String",
+      "Default":"a",
+      "AllowedValues": ["a","b","c"]
+
+    },
+    "AvailabilityZone2":{
+      "Type":"String",
+      "Default":"b",
+      "AllowedValues": ["a","b","c"]
+    },
+    "AvailabilityZone3":{
+      "Type":"String",
+      "Default":"c",
+      "AllowedValues":["a","b","c"]
+
+    },
+
+    "RouteIpaddress":{
+      "Type":"String",
+      "Default":"0.0.0.0/0"
+
+    }
+  },
+  "Resources": {
+    "VPC": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "EnableDnsSupport": "true",
+        "EnableDnsHostnames": "true",
+        "CidrBlock":{"Ref":"VPCSubnetCidrBlock"},
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {"Fn::Join":["",[{"Ref": "VPCName"},"-csye6225-vpc"]]}
+          }
+        ]
+      }
+    },
+    "publicsubnet1": {
+      "Type": "AWS::EC2::Subnet",
+      "DependsOn": "VPC",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPC"
+        },
+        "CidrBlock":{"Ref":"PublicSubnetCidrBlock1"},
+        "AvailabilityZone": {"Fn::Join":["",[{"Ref":"AWS::Region"},{"Ref":"AvailabilityZone1"}]]},
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {"Fn::Join":["",[{"Ref": "VPCName"},"-public-az1"]]}
+          }
+        ]
+      }
+    },
+    "publicsubnet2": {
+      "Type": "AWS::EC2::Subnet",
+      "DependsOn": "VPC",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPC"
+        },
+        "CidrBlock":{"Ref":"PublicSubnetCidrBlock2"},
+        "AvailabilityZone": {"Fn::Join":["",[{"Ref":"AWS::Region"},{"Ref":"AvailabilityZone2"}]]},
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {"Fn::Join":["",[{"Ref": "VPCName"},"-public-az2"]]}
+          }
+        ]
+      }
+    },
+    "publicsubnet3": {
+      "Type": "AWS::EC2::Subnet",
+      "DependsOn": "VPC",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPC"
+        },
+        "CidrBlock":{"Ref":"PublicSubnetCidrBlock3"},
+        "AvailabilityZone": {"Fn::Join":["",[{"Ref":"AWS::Region"},{"Ref":"AvailabilityZone3"}]]},
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {"Fn::Join":["",[{"Ref": "VPCName"},"-public-az3"]]}
+          }
+        ]
+      }
+    },
+    "InternetGateway": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {"Fn::Join":["",[{"Ref": "VPCName"},"-public-IG"]]}
+          }
+        ]
+      }
+    },
+    "GatewayAttachment": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "DependsOn": [
+        "InternetGateway",
+        "VPC"
+      ],
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPC"
+        },
+        "InternetGatewayId": {
+          "Ref": "InternetGateway"
+        }
+      }
+    },
+    "PublicRouteTable": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+
+        "VpcId": {
+          "Ref": "VPC"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {"Fn::Join":["",[{"Ref": "VPCName"},"-csye6225-rt"]]}
+          }
+        ]
+      }
+    },
+    "Route": {
+      "Type": "AWS::EC2::Route",
+      "DependsOn": [
+        "PublicRouteTable",
+        "InternetGateway"
+      ],
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "PublicRouteTable"
+        },
+        "DestinationCidrBlock":{"Ref":"RouteIpaddress"},
+        "GatewayId": {
+          "Ref": "InternetGateway"
+        }
+      }
+    },
+    "PublicSubnetRouteTableAssociation1": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "DependsOn": [
+        "publicsubnet1",
+        "PublicRouteTable",
+        "GatewayAttachment"
+      ],
+      "Properties": {
+        "SubnetId": {
+          "Ref": "publicsubnet1"
+        },
+        "RouteTableId": {
+          "Ref": "PublicRouteTable"
+        }
+      }
+    },
+    "PublicSubnetRouteTableAssociation2": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "DependsOn": [
+        "publicsubnet2",
+        "PublicRouteTable",
+        "GatewayAttachment"
+      ],
+      "Properties": {
+        "SubnetId": {
+          "Ref": "publicsubnet2"
+        },
+        "RouteTableId": {
+          "Ref": "PublicRouteTable"
+        }
+      }
+    },
+    "PublicSubnetRouteTableAssociation3": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "DependsOn": [
+        "publicsubnet3",
+        "PublicRouteTable",
+        "GatewayAttachment"
+      ],
+      "Properties": {
+        "SubnetId": {
+          "Ref": "publicsubnet3"
+        },
+        "RouteTableId": {
+          "Ref": "PublicRouteTable"
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "vpcid":{
+      "Description": "A reference to the created VPC",
+      "Value":{"Ref":"VPC"},
+      "Export":{
+        "Name":"csye6225-cloud-Networking-VPC-Id"
+      }
+    },
+    "PublicSubnet1": {
+      "Description": "A reference to the public subnet1",
+      "Value" : {"Ref": "publicsubnet1"}
+    },
+    "PublicSubnet2": {
+      "Description": "A reference to the public subnet2",
+      "Value" : {"Ref": "publicsubnet2"}
+    },
+    "PublicSubnet3": {
+      "Description": "A reference to the public subnet3",
+      "Value" : {"Ref": "publicsubnet3"}
+    }
+  }
+}
