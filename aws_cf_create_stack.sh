@@ -20,7 +20,8 @@ echo "$sName Stack creation in progress..."
 stackID=$(aws cloudformation create-stack \
   --stack-name $sName \
   --template-body file://networking.json \
-  --parameters ParameterKey=AwsRegion,ParameterValue=$mAwsRegion \
+  --region $mAwsRegion \
+  --parameters  \
   ParameterKey=VPCSubnetCidrBlock,ParameterValue=$mVPCSubnetCidrBlock \
   ParameterKey=AvailabilityZone1,ParameterValue=$mAvailabilityZone1 \
   ParameterKey=AvailabilityZone2,ParameterValue=$mAvailabilityZone2 \
@@ -33,7 +34,7 @@ stackID=$(aws cloudformation create-stack \
   --query [StackId] --output text)
 
 #commnad execution
-aws cloudformation wait stack-create-complete --stack-name $stackID
+#aws cloudformation wait stack-create-complete --stack-name $stackID
 
 echo $stackID
 
