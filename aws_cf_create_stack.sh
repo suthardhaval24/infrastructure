@@ -3,7 +3,8 @@ echo "Enter the stack name to be created"
 read sName
 
 #declaring values
-mAwsRegion=us-east-2
+mAwsRegion=us-east-1
+mVPCName= CloudDemo
 mVPCSubnetCidrBlock=10.0.0.0/16
 mAvailabilityZone1=a
 mAvailabilityZone2=b
@@ -22,6 +23,7 @@ stackID=$(aws cloudformation create-stack \
   --template-body file://networking.json \
   --region $mAwsRegion \
   --parameters  \
+  ParameterKey=VPCName,ParameterValue=$mVPCName \
   ParameterKey=VPCSubnetCidrBlock,ParameterValue=$mVPCSubnetCidrBlock \
   ParameterKey=AvailabilityZone1,ParameterValue=$mAvailabilityZone1 \
   ParameterKey=AvailabilityZone2,ParameterValue=$mAvailabilityZone2 \
