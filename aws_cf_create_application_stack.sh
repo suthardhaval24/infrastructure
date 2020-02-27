@@ -3,23 +3,25 @@ echo "Enter the stack name to be created"
 read sName
 
 #declaring values
-mAwsRegion=us-east-1
-mVPCName=CloudDemo
-mVPCSubnetCidrBlock=10.0.0.0/16
-mAvailabilityZone1=a
-mAvailabilityZone2=b
-mAvailabilityZone3=c
-mSubnetCidrBlock1=10.0.1.0/24
-mSubnetCidrBlock2=10.0.2.0/24
-mSubnetCidrBlock3=10.0.3.0/24
-mRouteIpaddress=0.0.0.0/0
-mkeyName=awswebapp
-mAmiId=ami-0eb08f83893055314
-mEC2InstanceSize=8
-mRDSInstanceSize=8
-mRDSPublicAccessibility=false
-mNameTag=CloudDemoEC2
-mAccountno=910644426425
+mAwsRegion=
+mVPCName=
+mVPCSubnetCidrBlock=
+mAvailabilityZone1=
+mAvailabilityZone2=
+mAvailabilityZone3=
+mSubnetCidrBlock1=
+mSubnetCidrBlock2=
+mSubnetCidrBlock3=
+mRouteIpaddress=
+mkeyName=
+mAmiId=
+mEC2InstanceSize=
+mRDSInstanceSize=
+mRDSPublicAccessibility=
+mNameTag=
+mAccountno=
+mDBUsername=
+mDBPassword=
 StackName=$sName
 
 echo "$sName Stack creation in progress..."
@@ -47,6 +49,8 @@ stackID=$(aws cloudformation create-stack \
   ParameterKey=RDSPublicAccessibility,ParameterValue=$mRDSPublicAccessibility \
   ParameterKey=NameTag,ParameterValue=$mNameTag \
   ParameterKey=Accountno,ParameterValue=$mAccountno \
+  ParameterKey=DBUsername,ParameterValue=$mDBUsername \
+  ParameterKey=DBPassword,ParameterValue=$mDBPassword \
   ParameterKey=VPCName,ParameterValue=$StackName \
   --query [StackId] --output text)
 
