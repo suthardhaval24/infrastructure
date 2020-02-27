@@ -91,6 +91,12 @@
     },
     "Accountno": {
       "Type": "String"
+    },
+    "DBUsername": {
+      "Type": "String"
+    },
+    "DBPassword": {
+      "Type": "String"
     }
   },
   "Resources": {
@@ -419,12 +425,9 @@
               [
                 "#!/bin/bash -xe \n",
                 "sudo apt-get update \n",
-                "sudo apt-get install -y maven \n",
-                "sudo apt-get install -y unzip \n",
-                "sudo apt-get install -y wget \n",
                 "cd /home/ubuntu \n",
-                "echo 'export username=dbuser' >> /etc/environment \n",
-                "echo 'export password=Webapp9876' >> /etc/environment \n",
+                "echo 'export username=",{"Ref": "DBUsername"},"'>> /etc/environment \n",
+                "echo 'export password=",{"Ref": "DBPassword"},"' >> /etc/environment \n",
                 {
                   "Fn::Join": [
                     "",
@@ -558,8 +561,8 @@
         "Engine": "MySQL",
         "MultiAZ": "false",
         "DBInstanceIdentifier": "csye6225-spring2020",
-        "MasterUsername": "dbuser",
-        "MasterUserPassword": "Webapp9876",
+        "MasterUsername": {"Ref": "DBUsername"},
+        "MasterUserPassword": {"Ref": "DBPassword"},
         "DBName": "webapp",
         "DBSubnetGroupName": {
           "Ref": "dbsubnetgroup"
@@ -649,7 +652,12 @@
           "Version": "2012-10-17",
           "Statement": [
             {
-              "Action":"s3:*",
+              "Action":[
+                "s3:Get*",
+                "s3:List*",
+                "s3:Delete*",
+                "s3:Put*"
+              ],
               "Effect": "Allow",
               "Resource": [
                 {
