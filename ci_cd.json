@@ -635,33 +635,6 @@
         ]
       }
     },
-    "S3UploadServiceRole": {
-      "Type": "AWS::IAM::Role",
-      "Properties": {
-        "RoleName": "EC2-CSYE6225",
-        "ManagedPolicyArns": [
-          {
-            "Ref": "AccessAttachmentToS3Bucket"
-          }
-        ],
-        "AssumeRolePolicyDocument": {
-          "Version": "2012-10-17",
-          "Statement": [
-            {
-              "Effect": "Allow",
-              "Principal": {
-                "Service": [
-                  "ec2.amazonaws.com"
-                ]
-              },
-              "Action": [
-                "sts:AssumeRole"
-              ]
-            }
-          ]
-        }
-      }
-    },
     "CodeDeployEC2ServiceRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -924,7 +897,7 @@
         "DeploymentGroupName": "csye6225-webapp-deployment",
         "DeploymentConfigName": "CodeDeployDefault.AllAtOnce",
         "DeploymentStyle": {
-          "DeploymentOption" : "WITHOUT_TRAFFIC_CONTROL",
+          "DeploymentOption": "WITHOUT_TRAFFIC_CONTROL",
           "DeploymentType": "IN_PLACE"
         },
         "AutoRollbackConfiguration": {
@@ -933,12 +906,15 @@
             "DEPLOYMENT_FAILURE"
           ]
         },
-        "Ec2TagFilters" : [{
-          "Key" : "Name",
-          "Type" : "KEY_AND_VALUE",
-          "Value" : {"Ref" : "NameTag"}
-
-        }],
+        "Ec2TagFilters": [
+          {
+            "Key": "Name",
+            "Type": "KEY_AND_VALUE",
+            "Value": {
+              "Ref": "NameTag"
+            }
+          }
+        ],
         "ServiceRoleArn": {
           "Fn::GetAtt": [
             "CodeDeployServiceRole",
