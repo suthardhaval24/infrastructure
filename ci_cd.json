@@ -645,7 +645,8 @@
           },
           {
             "Ref": "AccessAttachmentToS3Bucket"
-          }
+          },
+          "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
         ],
         "AssumeRolePolicyDocument": {
           "Version": "2012-10-17",
