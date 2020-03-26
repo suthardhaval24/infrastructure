@@ -30,6 +30,13 @@
          > sh aws_cf_create_CI_CD.sh 
      4. To delete stack run aws_cf_delete_stack.sh file and provide stack name and region
          > sh aws_cf_delete_stack.sh
+ 5. TO create an application stack with auto scaling configuration on aws cloudformation 
+      1. set value of variables in aws_auto_scaling.sh shell file
+      2. all the details regarding VPC creation and application stack can be found in autoscaling.json
+      3. To create an application stack run aws_cf_auto_scaling.sh file
+          > sh aws_cf_auto_scaling.sh 
+      4. To delete stack run aws_cf_delete_stack.sh file and provide stack name and region
+          > sh aws_cf_delete_stack.sh
 
 ## NOTE
 
