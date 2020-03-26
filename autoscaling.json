@@ -908,7 +908,7 @@
                   ]
                 },
                 "echo 'export endpointUrl=https://s3.us-east-1.amazonaws.com/'>> /etc/environment \n",
-                "source /etc/environment",
+                "source /etc/environment \n",
                 "sudo mkdir /home/ubuntu/webapp \n",
                 "sudo chown ubuntu:ubuntu -R /home/ubuntu/webapp \n"
               ]
