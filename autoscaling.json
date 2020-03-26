@@ -858,8 +858,6 @@
               "",
               [
                 "#!/bin/bash -xe \n",
-                "sudo apt-get update \n",
-                "sudo service codedeploy-agent start \n",
                 "echo 'export username=",
                 {
                   "Ref": "DBUsername"
@@ -910,6 +908,7 @@
                   ]
                 },
                 "echo 'export endpointUrl=https://s3.us-east-1.amazonaws.com/'>> /etc/environment \n",
+                "source /etc/environment",
                 "sudo mkdir /home/ubuntu/webapp \n",
                 "sudo chown ubuntu:ubuntu -R /home/ubuntu/webapp \n"
               ]
