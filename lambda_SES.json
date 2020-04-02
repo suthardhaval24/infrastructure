@@ -869,6 +869,11 @@
                   "Ref": "DBUsername"
                 },
                 "'>> /etc/environment \n",
+                "echo 'export domainName=",
+                {
+                  "Ref" : "DomainName"
+                },
+                "'>> /etc/environment \n",
                 "echo 'export password=",
                 {
                   "Ref": "DBPassword"
@@ -1216,12 +1221,12 @@
         ]
       }
     },
-    "SQSForRequest":{
-      "Type" : "AWS::SQS::Queue",
-      "Properties" : {
-        "MessageRetentionPeriod" : "3600",
-        "QueueName" : "BillDueQueue",
-        "MaximumMessageSize":"1024"
+    "SQSForRequest": {
+      "Type": "AWS::SQS::Queue",
+      "Properties": {
+        "MessageRetentionPeriod": "3600",
+        "QueueName": "BillDueQueue",
+        "MaximumMessageSize": "1024"
       }
     },
     "lambdaPermission": {
