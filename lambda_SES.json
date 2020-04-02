@@ -942,10 +942,10 @@
         "LaunchConfigurationName": {
           "Ref": "asglaunchconfig"
         },
-        "MinSize": "1",
-        "MaxSize": "2",
+        "MinSize": "2",
+        "MaxSize": "5",
         "Cooldown": "60",
-        "DesiredCapacity": "1",
+        "DesiredCapacity": "2",
         "TargetGroupARNs": [
           {
             "Ref": "ALBTargetGroup"
