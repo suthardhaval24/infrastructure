@@ -16,35 +16,42 @@
         > sh aws_cf_create_stack.sh
     4. To delete stack run aws_cf_delete_stack.sh file and provide stack name and region
         > sh aws_cf_delete_stack.sh                                                                
- 3. TO create an application stack on aws cloudformation 
+ 3. To create an application stack on aws cloudformation 
     1. set value of variables in aws_cf_create_application_stack.sh shell file
     2. all the details regarding VPC creation and application stack can be found in application.json
     3. To create an application stack run aws_cf_create_application_stack.sh file
         > sh aws_cf_create_application_stack.sh 
     4. To delete stack run aws_cf_delete_stack.sh file and provide stack name and region
         > sh aws_cf_delete_stack.sh                                                                               
- 4. TO create an application stack with CI/CD configuration on aws cloudformation 
+ 4. To create an application stack with CI/CD configuration on aws cloudformation 
      1. set value of variables in aws_cf_create_CI_CD.sh shell file
      2. all the details regarding VPC creation and application stack can be found in ci_cd.json
      3. To create an application stack run aws_cf_create_.CI_CD.sh file
          > sh aws_cf_create_CI_CD.sh 
      4. To delete stack run aws_cf_delete_stack.sh file and provide stack name and region
          > sh aws_cf_delete_stack.sh
- 5. TO create an application stack with auto scaling configuration on aws cloudformation 
+ 5. To create an application stack with auto scaling configuration on aws cloudformation 
       1. set value of variables in aws_auto_scaling.sh shell file
       2. all the details regarding VPC creation and application stack can be found in autoscaling.json
       3. To create an application stack run aws_cf_auto_scaling.sh file
           > sh aws_cf_auto_scaling.sh 
       4. To delete stack run aws_cf_delete_stack.sh file and provide stack name and region
           > sh aws_cf_delete_stack.sh
- 6. TO create an application stack with auto scaling configuration and Lambda and SNS on aws cloudformation 
+ 6. To create an application stack with auto scaling configuration and Lambda and SNS on aws cloudformation 
        1. set value of variables in aws_cf_lambda_ses.sh shell file
        2. all the details regarding VPC creation and application stack can be found in lambda_SES.json
        3. To create an application stack run aws_cf_lambda_ses.sh file
            > sh aws_cf_lambda_ses.sh 
        4. To delete stack run aws_cf_delete_stack.sh file and provide stack name and region
            > sh aws_cf_delete_stack.sh
-   
+ 7. To create an application stack with auto scaling configuration and Lambda and SNS with Secure Cloud on aws cloudformation 
+       1. set value of variables in aws_cf_secure_cloud.sh shell file
+       2. all the details regarding VPC creation and application stack can be found in secure_cloud.json
+       3. To create an application stack run aws_cf_secure_cloud.sh file
+            > sh aws_cf_secure_cloud.sh 
+       4. To delete stack run aws_cf_delete_stack.sh file and provide stack name and region
+            > sh aws_cf_delete_stack.sh
+    
 ## NOTE
 
 In each step, the cloudformation script is getting expanded from Network,Application and CI/CD configuration.
