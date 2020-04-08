@@ -463,6 +463,8 @@
           "Ref": "RDSInstanceSize"
         },
         "Engine": "MySQL",
+        "EngineVersion" : "5.7",
+        "DBParameterGroupName" : { "Ref" : "MyRDSParamGroup" },
         "MultiAZ": "false",
         "DBInstanceIdentifier": "csye6225-spring2020",
         "MasterUsername": {
@@ -485,7 +487,17 @@
           }
         ],
         "StorageType": "gp2",
-        "StorageEncrypted" : "true"
+        "StorageEncrypted": "true"
+      }
+    },
+    "MyRDSParamGroup": {
+      "Type": "AWS::RDS::DBParameterGroup",
+      "Properties": {
+        "Family": "MySQL5.7",
+        "Description": "CloudFormation MYSQL Database Parameter Group",
+        "Parameters": {
+          "performance_schema": "1"
+         }
       }
     },
     "S3Bucket": {
@@ -875,7 +887,7 @@
                 "'>> /etc/environment \n",
                 "echo 'export domainName=",
                 {
-                  "Ref" : "DomainName"
+                  "Ref": "DomainName"
                 },
                 "'>> /etc/environment \n",
                 "echo 'export password=",
