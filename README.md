@@ -54,4 +54,18 @@
     
 ## NOTE
 
-In each step, the cloudformation script is getting expanded from Network,Application and CI/CD configuration.
+### Import SSL Certificate Using AWS CLI :
+
+* The PEM-encoded certificate is stored in a file named Certificate.pem.
+
+* The PEM-encoded certificate chain is stored in a file named CertificateChain.pem.
+
+* The PEM-encoded, unencrypted private key is stored in a file named PrivateKey.pem.
+
+* To use the following example, replace the file names with your own and type the command on one continuous line. 
+
+  	$ aws acm import-certificate --certificate file://Certificate.pem
+                                 --certificate-chain file://CertificateChain.pem
+                                 --private-key file://PrivateKey.pem
+                                 
+### In each step, the cloudformation script is getting expanded from Network,Application and CI/CD configuration.
